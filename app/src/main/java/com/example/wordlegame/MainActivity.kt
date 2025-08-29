@@ -35,17 +35,19 @@ class MainActivity : AppCompatActivity() {
             bigView.text = guess
             bigView.visibility = View.VISIBLE
 
-            if (guessCount == 0) {
-                findViewById<TextView>(R.id.textView7).text = guess
-                findViewById<TextView>(R.id.textView6).text = result
-            }
-            else if (guessCount == 1) {
-                findViewById<TextView>(R.id.textView9).text = guess
-                findViewById<TextView>(R.id.textView8).text = result
-            }
-            else if (guessCount == 2) {
-                findViewById<TextView>(R.id.textView11).text = guess
-                findViewById<TextView>(R.id.textView10).text = result
+            when (guessCount) {
+                0 -> {
+                    findViewById<TextView>(R.id.textView7).text = guess
+                    findViewById<TextView>(R.id.textView6).text = result
+                }
+                1 -> {
+                    findViewById<TextView>(R.id.textView9).text = guess
+                    findViewById<TextView>(R.id.textView8).text = result
+                }
+                2 -> {
+                    findViewById<TextView>(R.id.textView11).text = guess
+                    findViewById<TextView>(R.id.textView10).text = result
+                }
             }
 
             guessCount+=1
@@ -98,14 +100,12 @@ class MainActivity : AppCompatActivity() {
         var result = ""
 
         for (i in 0..3) {
-            if (guess[i] == wordToGuess[i]) {
-                result += "O"
-            }
-            else if (guess[i] in wordToGuess) {
-                result += "+"
-            }
-            else {
-                result += "X"
+            result += if (guess[i] == wordToGuess[i]) {
+                "O"
+            } else if (guess[i] in wordToGuess) {
+                "+"
+            } else {
+                "X"
             }
         }
         return result

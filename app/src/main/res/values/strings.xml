@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Wordle Game</string>
+    <string name="reset">Reset</string>
+    <string name="guess">Guess</string>
+    <string name="enter_a_word">Enter a word!</string>
+    <string name="guess_answer">Guess!</string>
+    <string name="guess_3_check">Guess #3 Check</string>
+    <string name="guess_3">Guess #3</string>
+    <string name="guess_2_check">Guess #2 Check</string>
+    <string name="guess_2">Guess #2</string>
+    <string name="guess_1_check">Guess #1 Check</string>
+    <string name="guess_1">Guess #1</string>
+    <string name="xx0x">XX0X</string>
+    <string name="most">most</string>
+    <string name="x0xx">X0XX</string>
+    <string name="dogs">dogs</string>
+    <string name="xxxx">XXXX</string>
+    <string name="word">word</string>
 </resources>
