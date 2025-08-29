@@ -9,11 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
     var wordToGuess = FourLetterWordList.getRandomFourLetterWord()
-
+    var guessCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,14 +23,59 @@ class MainActivity : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.button)
         val editText = findViewById<EditText>(R.id.user_guess)
+        val resetButton = findViewById<Button>(R.id.reset)
+
+        resetButton.visibility = View.INVISIBLE
 
         button.setOnClickListener {
             val guess = editText.text.toString().uppercase()
-            val guessView = findViewById<TextView>(R.id.textView7)
+            val result = checkGuess(guess)
+
             val bigView = findViewById<TextView>(R.id.main_guess)
-            guessView.text = guess
             bigView.text = guess
             bigView.visibility = View.VISIBLE
+
+            if (guessCount == 0) {
+                findViewById<TextView>(R.id.textView7).text = guess
+                findViewById<TextView>(R.id.textView6).text = result
+            }
+            else if (guessCount == 1) {
+                findViewById<TextView>(R.id.textView9).text = guess
+                findViewById<TextView>(R.id.textView8).text = result
+            }
+            else if (guessCount == 2) {
+                findViewById<TextView>(R.id.textView11).text = guess
+                findViewById<TextView>(R.id.textView10).text = result
+            }
+
+            guessCount+=1
+
+
+            if (result == "OOOO") {
+                Toast.makeText(this, "You Guessed Correctly!", Toast.LENGTH_LONG).show()
+                button.isEnabled = false
+            } else if (guessCount >= 3) {
+                Toast.makeText(this, "The word is $wordToGuess", Toast.LENGTH_LONG).show()
+                button.isEnabled = false
+            }
+
+            editText.text.clear()
+        }
+
+        resetButton.setOnClickListener {
+            wordToGuess = FourLetterWordList.getRandomFourLetterWord()
+            guessCount = 0
+
+            findViewById<TextView>(R.id.textView7).text = ""
+            findViewById<TextView>(R.id.textView6).text = ""
+            findViewById<TextView>(R.id.textView9).text = ""
+            findViewById<TextView>(R.id.textView8).text = ""
+            findViewById<TextView>(R.id.textView11).text = ""
+            findViewById<TextView>(R.id.textView10).text = ""
+            findViewById<TextView>(R.id.main_guess).visibility = View.INVISIBLE
+
+            button.isEnabled = true
+            resetButton.isEnabled = false
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
