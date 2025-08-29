@@ -1,5 +1,5 @@
-class FourLetterWordList {
-    // author: calren
+
+    // author: careen
     object FourLetterWordList {
         // List of most common 4 letter words from: https://7esl.com/4-letter-words/
         val fourLetterWords =
@@ -17,4 +17,3 @@ class FourLetterWordList {
             return allWords[randomNumber].uppercase()
         }
     }
-}
