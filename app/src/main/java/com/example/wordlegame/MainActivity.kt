@@ -29,11 +29,13 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             val guess = editText.text.toString().uppercase()
-            val result = checkGuess(guess)
 
-            val bigView = findViewById<TextView>(R.id.main_guess)
-            bigView.text = guess
-            bigView.visibility = View.VISIBLE
+            if (guess.length != 4) {
+                Toast.makeText(this, "Please enter a 4 letter word", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val result = checkGuess(guess)
 
             when (guessCount) {
                 0 -> {
@@ -50,34 +52,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            guessCount+=1
+            guessCount++
 
 
             if (result == "OOOO") {
                 Toast.makeText(this, "You Guessed Correctly!", Toast.LENGTH_LONG).show()
-                button.isEnabled = false
+                finishGame(button, resetButton)
             } else if (guessCount >= 3) {
                 Toast.makeText(this, "The word is $wordToGuess", Toast.LENGTH_LONG).show()
-                button.isEnabled = false
+                finishGame(button, resetButton)
             }
 
             editText.text.clear()
         }
 
         resetButton.setOnClickListener {
-            wordToGuess = FourLetterWordList.getRandomFourLetterWord()
-            guessCount = 0
-
-            findViewById<TextView>(R.id.textView7).text = ""
-            findViewById<TextView>(R.id.textView6).text = ""
-            findViewById<TextView>(R.id.textView9).text = ""
-            findViewById<TextView>(R.id.textView8).text = ""
-            findViewById<TextView>(R.id.textView11).text = ""
-            findViewById<TextView>(R.id.textView10).text = ""
-            findViewById<TextView>(R.id.main_guess).visibility = View.INVISIBLE
-
-            button.isEnabled = true
-            resetButton.isEnabled = false
+            resetGame(button, resetButton)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -109,6 +99,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return result
+    }
+
+    fun finishGame(button: Button, resetButton: Button) {
+        button.isEnabled = false
+        resetButton.visibility = View.VISIBLE
+        resetButton.isEnabled = true
+    }
+
+    fun resetGame(button: Button, resetButton: Button) {
+        wordToGuess = FourLetterWordList.getRandomFourLetterWord()
+        guessCount = 0
+
+        findViewById<TextView>(R.id.textView7).text = ""
+        findViewById<TextView>(R.id.textView6).text = ""
+        findViewById<TextView>(R.id.textView9).text = ""
+        findViewById<TextView>(R.id.textView8).text = ""
+        findViewById<TextView>(R.id.textView11).text = ""
+        findViewById<TextView>(R.id.textView10).text = ""
+
+        button.isEnabled = true
+        resetButton.visibility = View.INVISIBLE
     }
 
 }

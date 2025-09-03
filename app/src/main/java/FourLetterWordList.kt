@@ -1,5 +1,5 @@
 
-    // author: careen
+    // author: calreen
     object FourLetterWordList {
         // List of most common 4 letter words from: https://7esl.com/4-letter-words/
         val fourLetterWords =
